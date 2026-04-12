@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\alyss\\OneDrive\\Desktop\\Projetos\\CadrastroVeiculos\\minimal-api\\minimal-api.csproj": {}
+    "c:\\Users\\alyss\\OneDrive\\Desktop\\Projetos\\CadrastroVeiculos\\minimal-api\\minimal-api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\alyss\\OneDrive\\Desktop\\Projetos\\CadrastroVeiculos\\minimal-api\\minimal-api.csproj": {
+    "c:\\Users\\alyss\\OneDrive\\Desktop\\Projetos\\CadrastroVeiculos\\minimal-api\\minimal-api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\alyss\\OneDrive\\Desktop\\Projetos\\CadrastroVeiculos\\minimal-api\\minimal-api.csproj",
+        "projectUniqueName": "c:\\Users\\alyss\\OneDrive\\Desktop\\Projetos\\CadrastroVeiculos\\minimal-api\\minimal-api.csproj",
         "projectName": "minimal-api",
-        "projectPath": "C:\\Users\\alyss\\OneDrive\\Desktop\\Projetos\\CadrastroVeiculos\\minimal-api\\minimal-api.csproj",
+        "projectPath": "c:\\Users\\alyss\\OneDrive\\Desktop\\Projetos\\CadrastroVeiculos\\minimal-api\\minimal-api.csproj",
         "packagesPath": "C:\\Users\\alyss\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\alyss\\OneDrive\\Desktop\\Projetos\\CadrastroVeiculos\\minimal-api\\obj\\",
+        "outputPath": "c:\\Users\\alyss\\OneDrive\\Desktop\\Projetos\\CadrastroVeiculos\\minimal-api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\alyss\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -42,28 +42,6 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "dependencies": {
-            "Microsoft.EntityFrameworkCore": {
-              "target": "Package",
-              "version": "[8.0.4, )"
-            },
-            "Microsoft.EntityFrameworkCore.Design": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[8.0.4, )"
-            },
-            "Microsoft.EntityFrameworkCore.Tools": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[8.0.4, )"
-            },
-            "Pomelo.EntityFrameworkCore.MySql": {
-              "target": "Package",
-              "version": "[8.0.4, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",

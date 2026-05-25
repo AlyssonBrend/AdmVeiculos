@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\alyss\\OneDrive\\Desktop\\Projetos\\CadrastroVeiculos\\minimal-api\\minimal-api.csproj": {}
+    "C:\\Users\\alyss\\OneDrive\\Desktop\\Projetos\\CadrastroVeiculos\\minimal-api\\minimal-api.csproj": {}
   },
   "projects": {
-    "c:\\Users\\alyss\\OneDrive\\Desktop\\Projetos\\CadrastroVeiculos\\minimal-api\\minimal-api.csproj": {
+    "C:\\Users\\alyss\\OneDrive\\Desktop\\Projetos\\CadrastroVeiculos\\minimal-api\\minimal-api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\alyss\\OneDrive\\Desktop\\Projetos\\CadrastroVeiculos\\minimal-api\\minimal-api.csproj",
+        "projectUniqueName": "C:\\Users\\alyss\\OneDrive\\Desktop\\Projetos\\CadrastroVeiculos\\minimal-api\\minimal-api.csproj",
         "projectName": "minimal-api",
-        "projectPath": "c:\\Users\\alyss\\OneDrive\\Desktop\\Projetos\\CadrastroVeiculos\\minimal-api\\minimal-api.csproj",
+        "projectPath": "C:\\Users\\alyss\\OneDrive\\Desktop\\Projetos\\CadrastroVeiculos\\minimal-api\\minimal-api.csproj",
         "packagesPath": "C:\\Users\\alyss\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\alyss\\OneDrive\\Desktop\\Projetos\\CadrastroVeiculos\\minimal-api\\obj\\",
+        "outputPath": "C:\\Users\\alyss\\OneDrive\\Desktop\\Projetos\\CadrastroVeiculos\\minimal-api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\alyss\\AppData\\Roaming\\NuGet\\NuGet.Config"

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Controle de Estacionamento</title>
+  <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+
+<!-- ── Navbar ──────────────────────────────────────────────────────────────── -->
+<nav class="navbar">
+  <div class="navbar-brand">
+    <span class="icon">🅿️</span>
+    <span data-i18n="appTitle">Controle de Estacionamento</span>
+  </div>
+  <div class="navbar-nav">
+    <button class="nav-btn" data-page="dashboard" data-i18n="navDashboard">Dashboard</button>
+    <button class="nav-btn" data-page="vehicles"  data-i18n="navVehicles">Veículos</button>
+    <button class="nav-btn" data-page="parking"   data-i18n="navParking">Entrada/Saída</button>
+    <button class="nav-btn" data-page="history"   data-i18n="navHistory">Histórico</button>
+    <button class="nav-btn" data-page="camera"    data-i18n="navCamera">Câmera</button>
+  </div>
+  <div class="navbar-right">
+    <select id="langSel" class="lang-sel">
+      <option value="pt">🇧🇷 PT</option>
+      <option value="en">🇬🇧 EN</option>
+      <option value="es">🇪🇸 ES</option>
+    </select>
+    <div id="userBadge" class="user-badge hidden"></div>
+    <button id="navLoginBtn" class="nav-btn" data-i18n="navLogin">Login</button>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ── Dashboard ──────────────────────────────────────────────────────────── -->
+  <div id="page-dashboard" class="page">
+    <div class="hero">
+      <h1 data-i18n="heroTitle">Sistema de Controle de Estacionamento</h1>
+      <p data-i18n="heroSub">Gerencie entradas, saídas e consulte valores por placa.</p>
+    </div>
+    <div class="stats">
+      <div class="stat-card"><div id="statActive" class="val">–</div><div class="lbl" data-i18n="statActive">No pátio</div></div>
+      <div class="stat-card"><div id="statToday" class="val">–</div><div class="lbl" data-i18n="statToday">Entradas hoje</div></div>
+      <div class="stat-card"><div id="statRevenue" class="val">–</div><div class="lbl" data-i18n="statRevenue">Receita</div></div>
+      <div class="stat-card"><div id="statVehicles" class="val">–</div><div class="lbl" data-i18n="statVehicles">Cadastrados</div></div>
+    </div>
+    <div class="card">
+      <h2>🚗 Veículos no pátio agora</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th data-i18n="colPlate">Placa</th>
+            <th data-i18n="colModel">Modelo</th>
+            <th>Cor</th>
+            <th data-i18n="colEntry">Entrada</th>
+            <th>Tempo</th>
+          </tr></thead>
+          <tbody id="activeTableBody"><tr><td colspan="5" class="no-records">–</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Veículos ────────────────────────────────────────────────────────────── -->
+  <div id="page-vehicles" class="page">
+    <h1 class="page-title" data-i18n="sectionVehicles">Cadastro de Veículos</h1>
+    <div class="card">
+      <h2>➕ Cadastrar</h2>
+      <form id="vehicleForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label data-i18n="labelPlate">Placa *</label>
+            <input id="vPlate" class="plate-input" type="text" maxlength="8" required data-i18n-ph="placeholderPlate" placeholder="Ex: ABC1234"/>
+          </div>
+          <div class="form-group">
+            <label data-i18n="labelModel">Modelo</label>
+            <input id="vModel" type="text"/>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label data-i18n="labelColor">Cor</label>
+            <input id="vColor" type="text"/>
+          </div>
+          <div class="form-group">
+            <label data-i18n="labelOwner">Proprietário</label>
+            <input id="vOwner" type="text"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label data-i18n="labelPhone">Telefone</label>
+          <input id="vPhone" type="text"/>
+        </div>
+        <button type="submit" class="btn btn-primary mt-1" data-i18n="btnRegister">Cadastrar</button>
+      </form>
+      <div id="vehicleAlert" class="hidden"></div>
+    </div>
+
+    <div class="card">
+      <h2>🔍 Buscar por placa</h2>
+      <div class="flex">
+        <input id="searchPlate" class="plate-input" type="text" maxlength="8" data-i18n-ph="placeholderPlate" placeholder="Ex: ABC1234" style="max-width:220px"/>
+        <button id="btnSearchVehicle" class="btn btn-secondary" data-i18n="btnSearch">Buscar</button>
+      </div>
+      <div id="vehicleResult" class="mt-1"></div>
+    </div>
+  </div>
+
+  <!-- ── Entrada / Saída ─────────────────────────────────────────────────────── -->
+  <div id="page-parking" class="page">
+    <h1 class="page-title" data-i18n="sectionExit">Entrada / Saída</h1>
+    <div class="card">
+      <h2>🔎 <span data-i18n="labelPlateEntry">Placa</span></h2>
+      <div class="flex" style="flex-wrap:wrap;gap:.75rem">
+        <input id="parkingPlate" class="plate-input" type="text" maxlength="8" data-i18n-ph="placeholderPlate" placeholder="Ex: ABC1234" style="max-width:220px"/>
+        <button id="btnEntry" class="btn btn-success" data-i18n="btnEntry">Registrar Entrada</button>
+        <button id="btnCheck"  class="btn btn-secondary" data-i18n="btnCheck">Consultar Valor</button>
+        <button id="btnExit"   class="btn btn-danger" data-i18n="btnExit">Registrar Saída</button>
+      </div>
+      <div id="parkingAlert" class="hidden mt-1"></div>
+      <div id="statusBox" class="mt-1"></div>
+    </div>
+  </div>
+
+  <!-- ── Histórico ───────────────────────────────────────────────────────────── -->
+  <div id="page-history" class="page">
+    <h1 class="page-title" data-i18n="sectionHistory">Histórico</h1>
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th data-i18n="colPlate">Placa</th>
+            <th data-i18n="colModel">Modelo</th>
+            <th data-i18n="colEntry">Entrada</th>
+            <th data-i18n="colExit">Saída</th>
+            <th data-i18n="colDuration">Duração</th>
+            <th data-i18n="colAmount">Valor</th>
+          </tr></thead>
+          <tbody id="histTableBody"></tbody>
+        </table>
+      </div>
+      <div class="text-center mt-1">
+        <button id="loadMoreHist" class="btn btn-secondary hidden" data-i18n="loadMore">Carregar mais</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Câmera ──────────────────────────────────────────────────────────────── -->
+  <div id="page-camera" class="page">
+    <h1 class="page-title" data-i18n="sectionCamera">Câmera / OCR</h1>
+    <div class="card">
+      <h2>📡 RTSP</h2>
+      <div class="form-group">
+        <label data-i18n="labelRtsp">URL RTSP da câmera</label>
+        <input id="rtspUrl" type="text" placeholder="rtsp://usuario:senha@192.168.1.100:554/stream"/>
+      </div>
+      <button id="btnCaptureRtsp" class="btn btn-primary mt-1" data-i18n="btnCapture">Capturar Placa</button>
+    </div>
+    <div class="card">
+      <h2>🖼️ Upload de imagem</h2>
+      <div class="camera-placeholder" id="cameraPlaceholder">📷</div>
+      <img id="imgPreview" class="camera-preview hidden" alt="Preview"/>
+      <div class="flex mt-1">
+        <button id="btnUploadImg" class="btn btn-secondary" data-i18n="btnUpload">Enviar Imagem</button>
+        <input id="fileInput" type="file" accept="image/*" class="hidden"/>
+      </div>
+    </div>
+    <div id="ocrResult" class="hidden"></div>
+  </div>
+
+  <!-- ── Login ──────────────────────────────────────────────────────────────── -->
+  <div id="page-login" class="page">
+    <div class="login-wrap">
+      <h2 data-i18n="loginTitle">Acesso ao Sistema</h2>
+      <form id="loginForm">
+        <div class="form-group">
+          <label data-i18n="labelEmail">E-mail</label>
+          <input id="loginEmail" type="email" required autocomplete="username"/>
+        </div>
+        <div class="form-group">
+          <label data-i18n="labelPassword">Senha</label>
+          <input id="loginPass" type="password" required autocomplete="current-password"/>
+        </div>
+        <div id="loginAlert" class="hidden"></div>
+        <button type="submit" class="btn btn-primary" data-i18n="btnLogin">Entrar</button>
+      </form>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  &copy; <span id="yearSpan"></span> Parking Control System
+</footer>
+
+<script src="/js/i18n.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>

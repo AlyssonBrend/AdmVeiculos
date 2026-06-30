@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ParkingControl.Data;
 using ParkingControl.Domain;
+using static ParkingControl.Domain.PlateHelper;
 
 namespace ParkingControl.Services;
 
@@ -13,7 +14,7 @@ public class ParkingService
     // ── Entrada ───────────────────────────────────────────────────────────────
     public async Task<ParkingRecord> RegisterEntryAsync(string plate, int? operatorId = null, string notes = "")
     {
-        plate = plate.ToUpper().Replace("-", "").Replace(" ", "");
+        plate = Normalize(plate);
 
         // Verifica se já está dentro
         var active = await _db.ParkingRecords
@@ -37,7 +38,7 @@ public class ParkingService
     // ── Saída + cálculo de valor ───────────────────────────────────────────────
     public async Task<ParkingRecord> RegisterExitAsync(string plate)
     {
-        plate = plate.ToUpper().Replace("-", "").Replace(" ", "");
+        plate = Normalize(plate);
 
         var record = await _db.ParkingRecords
             .Include(r => r.Vehicle)
@@ -55,7 +56,7 @@ public class ParkingService
     // ── Consulta valor atual (sem fechar) ─────────────────────────────────────
     public async Task<(ParkingRecord Record, decimal CurrentAmount)> GetCurrentValueAsync(string plate)
     {
-        plate = plate.ToUpper().Replace("-", "").Replace(" ", "");
+        plate = Normalize(plate);
 
         var record = await _db.ParkingRecords
             .Include(r => r.Vehicle)

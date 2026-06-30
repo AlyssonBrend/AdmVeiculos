@@ -25,6 +25,15 @@ public static class CameraEndpoints
                 return Results.BadRequest(new { error = "No image file provided." });
 
             var file = req.Form.Files[0];
+
+            const long MaxBytes = 10 * 1024 * 1024; // 10 MB
+            if (file.Length > MaxBytes)
+                return Results.BadRequest(new { error = "Image file exceeds 10 MB limit." });
+
+            var allowed = new[] { "image/jpeg", "image/png", "image/bmp" };
+            if (!allowed.Contains(file.ContentType, StringComparer.OrdinalIgnoreCase))
+                return Results.BadRequest(new { error = "Only JPEG, PNG and BMP images are accepted." });
+
             using var ms = new MemoryStream();
             await file.CopyToAsync(ms);
 

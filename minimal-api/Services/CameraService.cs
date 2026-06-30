@@ -55,7 +55,7 @@ public class CameraService
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error detecting plate from RTSP stream");
-                return new PlateDetectionResult { Success = false, Error = ex.Message };
+                return new PlateDetectionResult { Success = false, Error = "Failed to process RTSP stream." };
             }
         });
     }
@@ -93,7 +93,8 @@ public class CameraService
         }
         catch (Exception ex)
         {
-            return new PlateDetectionResult { Success = false, Error = ex.Message };
+            _logger.LogError(ex, "Error detecting plate from uploaded image");
+            return new PlateDetectionResult { Success = false, Error = "Failed to process image." };
         }
     }
 

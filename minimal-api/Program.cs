@@ -21,7 +21,10 @@ builder.Services.AddScoped<ParkingService>();
 builder.Services.AddScoped<CameraService>();
 
 // ── JWT Auth ──────────────────────────────────────────────────────────────────
-var jwtKey = builder.Configuration["Jwt:Key"]!;
+var jwtKey = builder.Configuration["Jwt:Key"]
+    ?? throw new InvalidOperationException("Jwt:Key não configurado. Defina-o em appsettings ou variáveis de ambiente.");
+if (jwtKey.Length < 32)
+    throw new InvalidOperationException("Jwt:Key deve ter no mínimo 32 caracteres.");
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(opt =>
     {
@@ -57,8 +60,12 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>()
+    ?? ["http://localhost:5174", "http://localhost:5173"];
+
 builder.Services.AddCors(opt =>
-    opt.AddDefaultPolicy(p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+    opt.AddDefaultPolicy(p =>
+        p.WithOrigins(allowedOrigins).AllowAnyMethod().AllowAnyHeader()));
 
 var app = builder.Build();
 

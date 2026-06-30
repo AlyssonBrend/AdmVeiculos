@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ParkingControl.Data;
 using ParkingControl.Domain;
+using static ParkingControl.Domain.PlateHelper;
 
 namespace ParkingControl.Endpoints;
 
@@ -16,7 +17,7 @@ public static class VehicleEndpoints
         // Buscar por placa
         app.MapGet("/api/vehicles/{plate}", async (string plate, AppDbContext db) =>
         {
-            plate = plate.ToUpper().Replace("-", "");
+            plate = Normalize(plate);
             var v = await db.Vehicles.FindAsync(plate);
             return v is null ? Results.NotFound() : Results.Ok(v);
         }).RequireAuthorization();
@@ -27,7 +28,7 @@ public static class VehicleEndpoints
             if (string.IsNullOrWhiteSpace(req.Plate))
                 return Results.BadRequest(new { error = "Plate is required." });
 
-            var plate = req.Plate.ToUpper().Replace("-", "").Replace(" ", "");
+            var plate = Normalize(req.Plate);
 
             if (await db.Vehicles.AnyAsync(v => v.Plate == plate))
                 return Results.Conflict(new { error = "Vehicle already registered." });
@@ -49,7 +50,7 @@ public static class VehicleEndpoints
         // Atualizar
         app.MapPut("/api/vehicles/{plate}", async (string plate, VehicleRequest req, AppDbContext db) =>
         {
-            plate = plate.ToUpper().Replace("-", "");
+            plate = Normalize(plate);
             var vehicle = await db.Vehicles.FindAsync(plate);
             if (vehicle is null) return Results.NotFound();
 
@@ -65,7 +66,7 @@ public static class VehicleEndpoints
         // Deletar
         app.MapDelete("/api/vehicles/{plate}", async (string plate, AppDbContext db) =>
         {
-            plate = plate.ToUpper().Replace("-", "");
+            plate = Normalize(plate);
             var vehicle = await db.Vehicles.FindAsync(plate);
             if (vehicle is null) return Results.NotFound();
             db.Vehicles.Remove(vehicle);
